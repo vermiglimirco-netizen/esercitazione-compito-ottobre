@@ -18,13 +18,16 @@ public class Main {
         {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            Scanner tastiera = new Scanner(System.in);
-
+            
             System.out.println("1. Consulta i posti disponibili");
             System.out.println("2. Prenota posti");
+            System.out.println("3. annulla posti");
             System.out.println("0. Esci");
-
+            
+            Scanner tastiera = new Scanner(System.in);
             String scelta = tastiera.nextLine();
+
+            GestoreClient gestoreclient = new GestoreClient (scelta);
             
             
 
