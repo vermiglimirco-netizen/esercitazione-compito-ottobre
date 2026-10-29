@@ -26,10 +26,31 @@ public class Main {
             
             Scanner tastiera = new Scanner(System.in);
             String scelta = tastiera.nextLine();
+            int azione=Integer.parseInt(scelta);
 
-            GestoreClient gestoreclient = new GestoreClient (scelta);
+            //GestoreClient gestoreclient = new GestoreClient (scelta);
             
-            
+            switch(azione)
+            {
+                case 1:
+                    out.println("DISPONIBILI");
+                break;
+                case 2:
+                    String aggiungiposti="0";
+                    aggiungiposti = tastiera.nextLine();
+                    out.println("PRENOTA " + aggiungiposti);
+                break;
+                case 3:
+                    String rimuoviposti="0";
+                    rimuoviposti = tastiera.nextLine();
+                    out.println("ANNULLA " + rimuoviposti);
+                break;
+                case 0:
+                    out.println("EXIT");
+                break;
+                default
+                break;
+            }
 
 
             out.println(scelta);
