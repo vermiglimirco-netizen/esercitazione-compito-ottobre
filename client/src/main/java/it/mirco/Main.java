@@ -48,7 +48,8 @@ public class Main {
                 case 0:
                     out.println("EXIT");
                 break;
-                default
+                default:
+                    System.out.println("selezione errata");
                 break;
             }
 

@@ -22,10 +22,11 @@ public class Main {
             
             while (true) 
             {
-                Socket socketClient = server.accept();
+                ExecutorService pool = Executors.newFixedThreadPool(10);
 
-                Thread thread = new Thread(new MioTask());
-                thread.start();
+                pool.execute(new Spettacolo());
+
+                pool.shutdown();                
             }
 
         } 
