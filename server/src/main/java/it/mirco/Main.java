@@ -22,7 +22,7 @@ public class Main {
             {
                 ExecutorService pool = Executors.newFixedThreadPool(10);
 
-                pool.execute(new Spettacolo());
+                pool.execute(new GestoreClient());
 
                 pool.shutdown();                
             }
