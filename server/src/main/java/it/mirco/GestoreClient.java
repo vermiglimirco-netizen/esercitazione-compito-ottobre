@@ -45,18 +45,19 @@ public class GestoreClient  implements Runnable
         String[] parti = risposta.split("\\s+");
         String fattore1=parti[0];
         int quantita=0;
+        int rimasti;
         switch (fattore1) 
         {
             case "DISPONIBILI":
-                    if(parti[1]!=null)
+                    if(parti.length!=1)
                     return "ERRORE;Sintassi non valida";
                 return "OK;Posti disponibili: "+ spettacolo.disponibili();
             case "PRENOTA":
                 try 
                 {
-                    if(parti[1]==null)
+                    if(parti.length==1)
                         return "ERRORE;Sintassi non valida";
-                    if(parti[2]!=null)
+                    if(parti.length>2)
                         return "ERRORE;Sintassi non valida";   
                     quantita = Integer.parseInt(parti[1]);
                     if(quantita<0)
@@ -65,18 +66,19 @@ public class GestoreClient  implements Runnable
                 catch (NumberFormatException e) 
                 {
                     return "ERRORE;Quantità non valida";
-                }       
-                if(spettacolo.prenota(quantita)!=-1)      
-                    return "OK;Prenotazione effettuata;Disponibili: "+ spettacolo.disponibili();
+                }      
+                rimasti=spettacolo.prenota(quantita);
+                if(rimasti!=-1)      
+                    return "OK;Prenotazione effettuata;Disponibili: "+ rimasti;
                 else
-                    return "ERRORE;Posti insufficienti;Disponibili: " + spettacolo.disponibili();
+                    return "ERRORE;Posti insufficienti;Disponibili: " + rimasti;
                     
             case "ANNULLA":                
                 try 
                 {
-                    if(parti[1]==null)
+                    if(parti.length==1)
                         return "ERRORE;Sintassi non valida";
-                    if(parti[2]!=null)
+                    if(parti.length>2)
                         return "ERRORE;Sintassi non valida";                    
                     quantita = Integer.parseInt(parti[1]);
                     if(quantita<0)
@@ -86,12 +88,13 @@ public class GestoreClient  implements Runnable
                 {
                     return "ERRORE;Quantità non valida";
                 }
-                if(spettacolo.annulla(quantita)!=-1)
+                rimasti=spettacolo.annulla(quantita);
+                if(rimasti!=-1)
                 {
-                    return "OK;Annullamento effettuato;Disponibili: "+ spettacolo.disponibili();
+                    return "OK;Annullamento effettuato;Disponibili: "+ rimasti;
                 }
                 else
-                    return "ERRORE;Annullamento non consentito;Disponibili: "+ spettacolo.disponibili();
+                    return "ERRORE;Annullamento non consentito;Disponibili: "+ rimasti;
             case "ESCI":
                 if(parti[1]!=null)
                     return "ERRORE;Sintassi non valida";
