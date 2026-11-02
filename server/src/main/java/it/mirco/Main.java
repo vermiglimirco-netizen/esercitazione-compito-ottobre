@@ -15,24 +15,23 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Main {
     public static void main(String[] args) {
 
+        Spettacolo spettacolo = new Spettacolo(30); 
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+
+
         try (ServerSocket server = new ServerSocket(12345))
-        {
-            
-            while (true) 
+        {            
+            while (true)
             {
-                ExecutorService pool = Executors.newFixedThreadPool(10);
-
-                pool.execute(new GestoreClient());
-
-                pool.shutdown();                
-            }
-
+                Socket client = server.accept();                       
+                pool.execute(new GestoreClient(client, spettacolo));   
+            }           
         } 
         catch (IOException e) 
         {
             e.printStackTrace();
         }
-
+        pool.shutdown();
 
 
 

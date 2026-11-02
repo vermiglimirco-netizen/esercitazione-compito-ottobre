@@ -12,14 +12,35 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Spettacolo
 {    
-    int postimax = 30;
-    int postioccupati = 0;
-    int postirimanenti=postimax-postioccupati;
+    private int postirimanenti;
+
+    public Spettacolo(int postirimanenti)
+    {
+        this.postirimanenti = postirimanenti;
+    }
     
     public synchronized int annulla(int posti) 
-    {}
+    {
+        if(posti<=postirimanenti)
+        {
+            postirimanenti += posti;
+            return postirimanenti;
+        }
+        else
+            return -1;
+    }
     public synchronized int prenota(int posti) 
-    {}
+    {
+        if(posti<=postirimanenti)
+        {
+            postirimanenti -= posti;
+            return postirimanenti;
+        }
+        else 
+            return -1;
+    }
     public synchronized int disponibili() 
-    {}
+    {
+        return postirimanenti;
+    }
 }

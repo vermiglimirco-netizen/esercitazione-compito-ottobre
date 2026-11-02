@@ -9,11 +9,12 @@ import java.net.Socket;
 public class GestoreClient  implements Runnable
 {
     private Socket clientsocket;
+    private Spettacolo spettacolo;
         
-    public GestoreClient(Socket clientsocket)
-    {
+    public GestoreClient(Socket clientsocket, Spettacolo spettacolo) {
         this.clientsocket = clientsocket;
-    }
+        this.spettacolo = spettacolo;
+    }    
 
     @Override
     public void run() 
@@ -49,7 +50,7 @@ public class GestoreClient  implements Runnable
             case "DISPONIBILI":
                     if(parti[1]!=null)
                     return "ERRORE;Sintassi non valida";
-                return "OK;Posti disponibili: "+ postirimanenti;
+                return "OK;Posti disponibili: "+ spettacolo.disponibili();
             case "PRENOTA":
                 try 
                 {
@@ -64,14 +65,12 @@ public class GestoreClient  implements Runnable
                 catch (NumberFormatException e) 
                 {
                     return "ERRORE;Quantità non valida";
-                }
-                if(quantita<=postirimanenti)
-                {
-                    postirimanenti-=quantita;
-                    return "OK;Prenotazione effettuata;Disponibili: "+ postirimanenti;
-                }
+                }       
+                if(spettacolo.prenota(quantita)!=-1)      
+                    return "OK;Prenotazione effettuata;Disponibili: "+ spettacolo.disponibili();
                 else
-                    return "ERRORE;Posti insufficienti;Disponibili: "+ postirimanenti;
+                    return "ERRORE;Posti insufficienti;Disponibili: " + spettacolo.disponibili();
+                    
             case "ANNULLA":                
                 try 
                 {
@@ -87,13 +86,12 @@ public class GestoreClient  implements Runnable
                 {
                     return "ERRORE;Quantità non valida";
                 }
-                if(quantita<=30-postirimanenti)
+                if(spettacolo.annulla(quantita)!=-1)
                 {
-                    postirimanenti+=quantita;
-                    return "OK;Annullamento effettuato;Disponibili: "+ postirimanenti;
+                    return "OK;Annullamento effettuato;Disponibili: "+ spettacolo.disponibili();
                 }
                 else
-                    return "ERRORE;Annullamento non consentito;Disponibili: "+ postirimanenti;
+                    return "ERRORE;Annullamento non consentito;Disponibili: "+ spettacolo.disponibili();
             case "ESCI":
                 if(parti[1]!=null)
                     return "ERRORE;Sintassi non valida";
