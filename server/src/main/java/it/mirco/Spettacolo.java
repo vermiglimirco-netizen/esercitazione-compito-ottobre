@@ -15,16 +15,14 @@ public class Spettacolo implements Runnable
 
     private Socket clientsocket;
         
-        public Spettacolo(Socket clientsocket)
-        {
-            this.clientsocket = clientsocket;
-        }
+    public Spettacolo(Socket clientsocket)
+    {
+        this.clientsocket = clientsocket;
+    }
 
     @Override
     public void run() 
-    {        
-        
-
+    {       
         try 
         (
             Socket socket = clientsocket;
@@ -32,22 +30,19 @@ public class Spettacolo implements Runnable
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         ) 
         {
-            while (!in.equals("EXIT")) 
+            String risposta = in.readLine();
+            while (!risposta.equals("EXIT")) 
             {
-                String risposta = in.readLine();
                 String stringa=modificarisorsa(risposta);
                 System.out.println(stringa);
+                risposta = in.readLine();
             }           
         } 
         catch (IOException e) 
         {
             System.err.println(e.getMessage());
-        }
-        
-        
-        
-    }
-    
+        }           
+    }    
     
     public synchronized String modificarisorsa(String risposta) 
     {
@@ -60,14 +55,19 @@ public class Spettacolo implements Runnable
         switch (fattore1) 
         {
             case "DISPONIBILI":
+                    if(parti[1]!=null)
+                    return "ERRORE;Sintassi non valida";
                 return "OK;Posti disponibili: "+ postirimanenti;
             case "PRENOTA":
                 try 
                 {
+                    if(parti[1]==null)
+                        return "ERRORE;Sintassi non valida";
+                    if(parti[2]!=null)
+                        return "ERRORE;Sintassi non valida";   
                     quantita = Integer.parseInt(parti[1]);
                     if(quantita<0)
                         return "ERRORE;La quantità deve essere positiva";
-
                 } 
                 catch (NumberFormatException e) 
                 {
@@ -83,6 +83,10 @@ public class Spettacolo implements Runnable
             case "ANNULLA":                
                 try 
                 {
+                    if(parti[1]==null)
+                        return "ERRORE;Sintassi non valida";
+                    if(parti[2]!=null)
+                        return "ERRORE;Sintassi non valida";                    
                     quantita = Integer.parseInt(parti[1]);
                     if(quantita<0)
                         return "ERRORE;La quantità deve essere positiva";
@@ -98,7 +102,9 @@ public class Spettacolo implements Runnable
                 }
                 else
                     return "ERRORE;Annullamento non consentito;Disponibili: "+ postirimanenti;
-            case "EXIT":
+            case "ESCI":
+                if(parti[1]!=null)
+                    return "ERRORE;Sintassi non valida";
                 return "OK;Connessione in chiusura";
                 case "":
                 return "ERRORE;Sintassi non valida";

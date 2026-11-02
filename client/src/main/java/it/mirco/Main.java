@@ -16,54 +16,52 @@ public class Main {
         
         try (Socket socket = new Socket("localhost", 12345))
         {
+
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            
-            System.out.println("1. Consulta i posti disponibili");
-            System.out.println("2. Prenota posti");
-            System.out.println("3. annulla posti");
-            System.out.println("0. Esci");
-            
-            Scanner tastiera = new Scanner(System.in);
-            String scelta = tastiera.nextLine();
-            int azione=Integer.parseInt(scelta);
-
-            //GestoreClient gestoreclient = new GestoreClient (scelta);
-            
-            switch(azione)
+            String scelta=null; 
+            while (!scelta.equals("0")) 
             {
-                case 1:
-                    out.println("DISPONIBILI");
-                break;
-                case 2:
-                    String aggiungiposti="0";
-                    aggiungiposti = tastiera.nextLine();
-                    out.println("PRENOTA " + aggiungiposti);
-                break;
-                case 3:
-                    String rimuoviposti="0";
-                    rimuoviposti = tastiera.nextLine();
-                    out.println("ANNULLA " + rimuoviposti);
-                break;
-                case 0:
-                    out.println("EXIT");
-                break;
-                default:
-                    System.out.println("selezione errata");
-                break;
-            }
+                
+                System.out.println("1. Consulta i posti disponibili");
+                System.out.println("2. Prenota posti");
+                System.out.println("3. annulla posti");
+                System.out.println("0. Esci");
+                
+                Scanner tastiera = new Scanner(System.in);
+                scelta = tastiera.nextLine();
+                int azione=Integer.parseInt(scelta);
+                
+                switch(azione)
+                {
+                    case 1:
+                        out.println("DISPONIBILI");
+                    break;
+                    case 2:
+                        String aggiungiposti="0";
+                        aggiungiposti = tastiera.nextLine();
+                        out.println("PRENOTA " + aggiungiposti);
+                    break;
+                    case 3:
+                        String rimuoviposti="0";
+                        rimuoviposti = tastiera.nextLine();
+                        out.println("ANNULLA " + rimuoviposti);
+                    break;
+                    case 0:
+                        out.println("ESCI");
+                    break;
+                    default:
+                        System.out.println("selezione errata");
+                    break;
+                }    
+    
+                out.println(scelta);
+    
+                String risposta = in.readLine();   
 
-
-            out.println(scelta);
-
-
-            
-            String risposta = in.readLine();
-
-
-
-
-        } catch (IOException e) 
+            }    
+        } 
+        catch (IOException e) 
         {
             e.printStackTrace();
         }
