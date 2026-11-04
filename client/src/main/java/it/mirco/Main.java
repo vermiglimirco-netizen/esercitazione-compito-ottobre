@@ -7,28 +7,29 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         
-        try (Socket socket = new Socket("localhost", 12345))
-        {
-
+        try 
+        (
+            Socket socket = new Socket("localhost", 12345);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            String scelta=null; 
+            Scanner tastiera = new Scanner(System.in);
+        )
+        {
+
+            String scelta="default"; 
             while (!scelta.equals("0")) 
-            {
-                
-                System.out.println("1. Consulta i posti disponibili");
-                System.out.println("2. Prenota posti");
-                System.out.println("3. annulla posti");
-                System.out.println("0. Esci");
-                
-                Scanner tastiera = new Scanner(System.in);
+                {
+                    
+                    System.out.println("1. Consulta i posti disponibili");
+                    System.out.println("2. Prenota posti");
+                    System.out.println("3. annulla posti");
+                    System.out.println("0. Esci");
+                    
                 scelta = tastiera.nextLine();
                 int azione=Integer.parseInt(scelta);
                 
@@ -53,15 +54,15 @@ public class Main {
                     default:
                         System.out.println("selezione errata");
                     break;
-                }    
+                }                 
     
-                out.println(scelta);
-    
-                String risposta = in.readLine();   
+                String risposta = in.readLine();  
+                System.out.println(risposta); 
 
             }    
+            System.out.println("OK;Connessione in chiusura");
         } 
-        catch (IOException e) 
+        catch (final IOException e) 
         {
             e.printStackTrace();
         }

@@ -27,10 +27,10 @@ public class GestoreClient  implements Runnable
         ) 
         {
             String risposta = in.readLine();
-            while (!risposta.equals("EXIT")) 
+            while (!risposta.equals("ESCI")) 
             {
                 String stringa=modificarisorsa(risposta);
-                System.out.println(stringa);
+                out.println(stringa);
                 risposta = in.readLine();
             }           
         } 
@@ -71,7 +71,7 @@ public class GestoreClient  implements Runnable
                 if(rimasti!=-1)      
                     return "OK;Prenotazione effettuata;Disponibili: "+ rimasti;
                 else
-                    return "ERRORE;Posti insufficienti;Disponibili: " + rimasti;
+                    return "ERRORE;Posti insufficienti;Disponibili: " + spettacolo.disponibili();
                     
             case "ANNULLA":                
                 try 
@@ -94,9 +94,9 @@ public class GestoreClient  implements Runnable
                     return "OK;Annullamento effettuato;Disponibili: "+ rimasti;
                 }
                 else
-                    return "ERRORE;Annullamento non consentito;Disponibili: "+ rimasti;
+                    return "ERRORE;Annullamento non consentito;Disponibili: "+ spettacolo.disponibili();
             case "ESCI":
-                if(parti[1]!=null)
+                if(parti.length!=1)
                     return "ERRORE;Sintassi non valida";
                 return "OK;Connessione in chiusura";
                 case "":
