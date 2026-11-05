@@ -47,13 +47,21 @@ public class Main {
                         } 
                         catch (NumberFormatException e) 
                         {
-                            System.out.println("ERRORE;Sintassi non valida");
+                            System.out.println("ERRORE;Quantità non valida");
                         }
                         out.println("PRENOTA " + aggiungiposti);
                     break;
                     case 3:
                         String rimuoviposti="0";
                         rimuoviposti = tastiera.nextLine();
+                        try 
+                        {
+                            int quantita = Integer.parseInt(aggiungiposti);
+                        } 
+                        catch (NumberFormatException e) 
+                        {
+                            System.out.println("ERRORE;Quantità non valida");
+                        }
                         out.println("ANNULLA " + rimuoviposti);
                     break;
                     case 0:
