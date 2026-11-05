@@ -41,6 +41,14 @@ public class Main {
                     case 2:
                         String aggiungiposti="0";
                         aggiungiposti = tastiera.nextLine();
+                        try 
+                        {
+                            int quantita = Integer.parseInt(aggiungiposti);
+                        } 
+                        catch (NumberFormatException e) 
+                        {
+                            System.out.println("ERRORE;Sintassi non valida");
+                        }
                         out.println("PRENOTA " + aggiungiposti);
                     break;
                     case 3:
@@ -52,7 +60,7 @@ public class Main {
                         out.println("ESCI");
                     break;
                     default:
-                        System.out.println("selezione errata");
+                        System.out.println("ERRORE;Sintassi non valida");
                     break;
                 }                 
     

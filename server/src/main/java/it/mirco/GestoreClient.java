@@ -21,9 +21,8 @@ public class GestoreClient  implements Runnable
     {       
         try 
         (
-            Socket socket = clientsocket;
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientsocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientsocket.getOutputStream(), true);
         ) 
         {
             String risposta = in.readLine();
@@ -40,7 +39,7 @@ public class GestoreClient  implements Runnable
         }           
     }    
     
-    public synchronized String modificarisorsa(String risposta) 
+    public synchronized String modificarisorsa(String risposta)
     {
         String[] parti = risposta.split("\\s+");
         String fattore1=parti[0];
@@ -99,7 +98,7 @@ public class GestoreClient  implements Runnable
                 if(parti.length!=1)
                     return "ERRORE;Sintassi non valida";
                 return "OK;Connessione in chiusura";
-                case "":
+            case "":
                 return "ERRORE;Sintassi non valida";
             default:
                 return "ERRORE;Comando sconosciuto";
